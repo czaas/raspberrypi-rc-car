@@ -1,0 +1,14 @@
+{
+  "name": "raspberrypi-rc-car",
+  "version": "1.0.0",
+  "description": "",
+  "main": "initial-test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "czaas",
+  "license": "ISC",
+  "devDependencies": {
+    "onoff": "^1.1.0"
+  }
+}
