@@ -9,6 +9,9 @@
   "author": "czaas",
   "license": "ISC",
   "devDependencies": {
-    "onoff": "^1.1.0"
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "onoff": "^1.1.0",
+    "path": "^0.12.7"
   }
 }
