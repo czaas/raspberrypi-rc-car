@@ -10,7 +10,7 @@
 
 		var control = $(this).attr('data-control');
 
-		$.post('http://czaaspi.localtunnel.me', {
+		$.post('http://czaaspi.localtunnel.me/', {
 			control: control
 		})
 			.done(function(res){

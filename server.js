@@ -10,7 +10,7 @@ var hardware = require('./hardware.js');
 // app settings
 app.use(express.static('app'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlEncoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // my settings
 var port = 9991;
