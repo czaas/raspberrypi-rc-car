@@ -1,32 +1,55 @@
 var Gpio = require('onoff').Gpio;
 
-// pulse width modulator
-var enablerB1 = new Gpio(2, 'out');
-var enablerB2 = new Gpio(3, 'out');
-var hThree = new Gpio(4, 'out');
-var hFour = new Gpio(14, 'out');
+var motor1 = new Motor(2, 3, 4, 14);
 
-enablerB1.writeSync(1, catchErr);
-enablerB2.writeSync(1, catchErr);
+// Drop in which GPIO port these inputs are using
+function Motor(enabler1Pin, enabler2Pin, inputMainPin, inputSecondPin) {
+	var enabler1 = new Gpio(enabler1Pin, 'out');
+	var enabler2 = new Gpio(enabler2Pin, 'out');
 
-start();
+	// enable the enabler pins on the H-Bridge
+	enabler1.writeSync(1, catchErr);
+	enabler2.writeSync(1, catchErr);
+
+	// be able to access the directional pins
+	return {
+		input1: new Gpio(inputMainPin, 'out'),
+		input2: new Gpio(inputSecondPin, 'out')
+	}
+}
+
+function counterClockwise(motor) {
+	console.log('one way');
+	motor.input1.writeSync(1, catchErr);
+	motor.input2.writeSync(0, catchErr);
+}
+
+function clockwise(motor) {
+	console.log('other way');
+	motor.input1.writeSync(0, catchErr);
+	motor.input2.writeSync(1, catchErr);
+	return;
+}
+
+function stop(motor) {
+	motor.input1.writeSync(0, catchErr);
+	motor.input2.writeSync(0, catchErr);
+	return;
+}
 
 function start() {
 	console.log('start');
 
 	setInterval(function() {
-		console.log('one way');
-		hThree.writeSync(1, catchErr);
-		hFour.writeSync(0, catchErr);
+		clockwise(motor1);
 
 		setTimeout(function(){
-			console.log('and another');
-			hThree.writeSync(0, catchErr);
-			hFour.writeSync(1, catchErr);
+			counterClockwise(motor1);
 		}, 2000);
 	}, 4000);
 }
 
+start();
 
 function catchErr(err) {
 	if(err) {
@@ -34,30 +57,3 @@ function catchErr(err) {
 	}
 	console.log('something written');
 }
-
-// time is in ms
-// function pwm(pin, frequencyTime, dutyCycleTime) {
-// 	// start the frequency
-// 	console.log('Frequency started');
-	
-// 	setInterval(function(){	
-// 		// turn on the voltage
-// 		console.log('Turn on');
-// 		pin.writeSync(1, function(err) {
-// 			if (err) { throw err; }
-// 		});
-
-// 		setTimeout(function(){
-// 			// turn off the voltage
-// 			console.log('turn off');
-// 			pin.writeSync(0, function(err) {
-// 				if (err) { throw err; }
-// 			});
-
-// 		}, dutyCycleTime);
-// 	}, frequencyTime);
-// }
-
-// for every half second, be on 60% of the time. 
-// If 6v going in, 3.6v goes out
-
