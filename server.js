@@ -1,8 +1,10 @@
 // libaries
 var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 var bodyParser = require('body-parser');
 var path = require('path');
-var app = express();
 
 // my components
 var hardware = require('./hardware.js');
@@ -22,11 +24,13 @@ app.get('/', function(req, res) {
 
 app.post('/', function(req, res){
 	var command = req.body.control;
+	
+});
+
+function controlMotor(control){ 
 	var targetMotor = motor1;
 
-	console.log(command);
-
-	switch(command) {
+	switch(control) {
 		case 'forward':
 			hardware.controls.clockwise(targetMotor);
 			break;
@@ -39,11 +43,23 @@ app.post('/', function(req, res){
 		default:
 			return;
 	}
+}
+
+io.on('connection', function(socket) {
+	socket.on('client', console.log);
+
+	socket.on('control', function(control){
+		console.log(control);
+		controlMotor(control.control);
+	});
+
+	socket.on('disconnect', function(){
+		console.log('client disconnected, disabling motor');
+		controlMotor('stop');
+	});
 });
 
 
-app.listen(port, function() {
+server.listen(port, function() {
 	console.log('listening on port ' + port)
 });
-
-
