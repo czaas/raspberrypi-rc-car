@@ -6,7 +6,14 @@
 <body>
 	<h2>Current Motor status: <span class="status">Stopped</span></h2>
 
-	<div class="controls">
+	<div class="controls" motor="left">
+		<h2>Left</h2>
+		<button class="forward" data-control="forward">Forward</button>
+		<button class="backward" data-control="backward">Backward</button>
+		<button class="stop" data-control="stop">Stop</button>
+	</div>
+	<div class="controls" motor="right">
+		<h2>Right</h2>
 		<button class="forward" data-control="forward">Forward</button>
 		<button class="backward" data-control="backward">Backward</button>
 		<button class="stop" data-control="stop">Stop</button>

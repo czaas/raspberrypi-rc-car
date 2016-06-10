@@ -12,20 +12,12 @@
 	$('.controls button').on('click', function(e) {
 		e.preventDefault();
 
-		var control = $(this).attr('data-control');
+		var control = {
+			direction: $(this).attr('data-control'),
+			motor: $(this).parent().attr('motor')
+		};
 
-		socket.emit('control', { control: control });
-
-		// $.post('http://czaaspi.localtunnel.me/', {
-		// 	control: control
-		// })
-		// 	.done(function(res){
-		// 		setStatus(res);
-		// 	});
-
-		// function setStatus(status) {
-		// 	$('.status').text(status);
-		// }
+		socket.emit('control', control);
 	});
 
 }(jQuery));
