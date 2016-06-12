@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // my settings
 var port = 9991;
-var leftMotor = new hardware.motor(2, 3, 4, 14);
-var rightMotor = new hardware.motor(17, 18, 27, 22);
+var leftMotor = new hardware.motor(17, 18, 27, 22);
+var rightMotor = new hardware.motor(2, 3, 4, 14);
 
 app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname + '/app/index.html'));
