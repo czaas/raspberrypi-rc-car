@@ -2,24 +2,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Raspberry PI motor controls</title>
+	<meta name="viewport" content="width=device-width, intial-scale=1" />
+	<link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-	<h2>Current Motor status: <span class="status">Stopped</span></h2>
-
-	<div class="controls" motor="left">
-		<h2>Left</h2>
-		<button class="forward" data-control="forward">Forward</button>
-		<button class="backward" data-control="backward">Backward</button>
-		<button class="stop" data-control="stop">Stop</button>
+	<h1>RC Car controller</h1>
+	<div class="controls clearfix">
+		<div id="joystick-1" class="controls__controler"></div>
+		<div id="joystick-2" class="controls__controler"></div>
 	</div>
-	<div class="controls" motor="right">
-		<h2>Right</h2>
-		<button class="forward" data-control="forward">Forward</button>
-		<button class="backward" data-control="backward">Backward</button>
-		<button class="stop" data-control="stop">Stop</button>
-	</div>
+	
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script src="/js/lib/nipple.min.js"></script>
 	<script src="/js/scripts.js"></script>
 </body>
 </html>
