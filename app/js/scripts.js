@@ -2,22 +2,59 @@
 	"use strict";
 
 	var socket = io();
-
-	var forward = $('.forward');
-	var backward = $('.backward');
-	var stop = $('.stop');
+	var left = {
+		mode: 'static',
+		color: 'red',
+		position: {
+			top: '50%',
+			left: '50%'
+		},
+		zone: document.getElementById('joystick-1')
+	};
+	var right = {
+		mode: 'static',
+		color: 'red',
+		position: {
+			top: '50%',
+			left: '50%'
+		},
+		zone: document.getElementById('joystick-2')
+	};
+	
+	var leftJoystick = nipplejs.create(left);
+	var rightJoystick = nipplejs.create(right);
 
 	socket.emit('client', 'connected');
 
-	$('.controls button').on('click', function(e) {
-		e.preventDefault();
+	function sendControl(motor, direction) {
+		socket.emit('control', {
+			motor: motor,
+			direction: direction
+		});
+	}
 
-		var control = {
-			direction: $(this).attr('data-control'),
-			motor: $(this).parent().attr('motor')
-		};
+	leftJoystick.on('plain:up', function(){
+		sendControl('left', 'forward');
+	});
 
-		socket.emit('control', control);
+	leftJoystick.on('plain:down', function(){
+		sendControl('left', 'backward');
+	});
+
+	leftJoystick.on('end', function() {
+		sendControl('left', 'stop');
+	});
+
+	rightJoystick.on('plain:up', function(){
+		sendControl('right', 'forward');
+	});
+
+	rightJoystick.on('plain:down', function(){
+		sendControl('right', 'backward');
+	});
+
+	rightJoystick.on('end', function() {
+		sendControl('right', 'stop');
 	});
 
 }(jQuery));
